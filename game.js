@@ -28,9 +28,13 @@ class Game {
       push()
       fill(255);
       text("Score: " + this.score, myWidth, 30);
+      text("Move with z,x,c,arrows and mouse", 81, 70);
       pop()
       this.time++;
-      this.playerAction()
+      this.playerActionMove();
+      if (this.time % 3 === 0) {
+        this.playerActionRotation()
+      }
       if (this.time % this.speed === 0) {
         this.counter++;
         if (!this.board.canMove()){
@@ -43,7 +47,7 @@ class Game {
           this.board.newFigure();
         } 
         this.move();
-        if (this.counter % 100 === 0) {
+        if (this.counter % 20 === 0) {
           if (this.speed != 1) {
             this.speed--;
           }
@@ -57,7 +61,7 @@ class Game {
     this.board.move();
   }
 
-  playerAction() {
+  playerActionMove() {
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
       if (this.board.canMove(-1, 0, 0)) {
         this.board.move(-1, 0, 0);
@@ -83,6 +87,9 @@ class Game {
         this.board.move(0, 0, -1);
       }
     }
+  }
+
+  playerActionRotation() {
     if (keyIsDown(88)) {
       if (this.board.canMove(0, 0, 0, 1)) {
         this.board.move(0, 0, 0, 1);
@@ -99,8 +106,6 @@ class Game {
       if (this.board.canMove(0, 0, 0, 0, 0, 1)) {
         this.board.move(0, 0, 0, 0, 0, 1);
       }
-    }
-    for (let i = 0; i < 400000; i++) {
     }
   }
 
